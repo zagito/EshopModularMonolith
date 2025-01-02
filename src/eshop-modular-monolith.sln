@@ -25,6 +25,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ordering", "Modules\Orderin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared\Shared.csproj", "{FF210154-A5C7-4C43-8979-BA923527F92C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eshop-modular-monolith.AppHost", "eshop-modular-monolith.AppHost\eshop-modular-monolith.AppHost.csproj", "{2792A020-5C0B-4F7C-8832-1642C465C805}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eshop-modular-monolith.ServiceDefaults", "eshop-modular-monolith.ServiceDefaults\eshop-modular-monolith.ServiceDefaults.csproj", "{6AF419F6-ED71-45E0-8C1F-266B0E8AFFB9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Aspire", "Aspire", "{EDE8BA92-C50C-429C-924D-F6784F58B857}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +57,14 @@ Global
 		{FF210154-A5C7-4C43-8979-BA923527F92C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FF210154-A5C7-4C43-8979-BA923527F92C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FF210154-A5C7-4C43-8979-BA923527F92C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2792A020-5C0B-4F7C-8832-1642C465C805}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2792A020-5C0B-4F7C-8832-1642C465C805}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2792A020-5C0B-4F7C-8832-1642C465C805}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2792A020-5C0B-4F7C-8832-1642C465C805}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6AF419F6-ED71-45E0-8C1F-266B0E8AFFB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6AF419F6-ED71-45E0-8C1F-266B0E8AFFB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6AF419F6-ED71-45E0-8C1F-266B0E8AFFB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6AF419F6-ED71-45E0-8C1F-266B0E8AFFB9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -64,5 +78,7 @@ Global
 		{D9BEB95A-0364-432C-86ED-9E040B176F6E} = {396F8C24-AADD-476B-BBE1-43403CB2A153}
 		{D4D36A0A-66AB-49EE-83CB-75C47549E1E8} = {D9E4F2BF-4DDB-4047-B3A6-C5C804198676}
 		{FF210154-A5C7-4C43-8979-BA923527F92C} = {6475112A-B7B8-4A90-B5D6-D05A27AE9160}
+		{2792A020-5C0B-4F7C-8832-1642C465C805} = {EDE8BA92-C50C-429C-924D-F6784F58B857}
+		{6AF419F6-ED71-45E0-8C1F-266B0E8AFFB9} = {EDE8BA92-C50C-429C-924D-F6784F58B857}
 	EndGlobalSection
 EndGlobal
