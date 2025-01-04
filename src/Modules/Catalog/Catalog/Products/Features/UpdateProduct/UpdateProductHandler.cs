@@ -25,7 +25,6 @@ public class UpdateProductHandler(CatalogDbContext dbContext) : ICommandHandler<
             request.ImageFile,
             request.Price);
 
-        //dbContext.Products.Update(product);
         await dbContext.SaveChangesAsync(cancellationToken);
 
         return Result.Success();

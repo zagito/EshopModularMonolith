@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Shared.Behaviors;
 using Shared.Data.Interceptors;
 
 
@@ -13,7 +14,10 @@ public static class CatalogModule
         service.AddMediatR(config =>
         {
             config.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly());
+            config.AddOpenBehavior(typeof(ValidationPipelineBehavior<,>));
         });
+
+        service.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
         var connectionString = configuration.GetConnectionString("eshopdb");
 

@@ -19,10 +19,22 @@ public class CreateProductCommandValidator : AbstractValidator<CreateProductComm
     }
 }
 
-public class CreateProductHandler(CatalogDbContext dbContext) : ICommandHandler<CreateProductCommand, Guid>
+public class CreateProductHandler(
+    CatalogDbContext dbContext,
+    ILogger<CreateProductHandler> logger)
+    : ICommandHandler<CreateProductCommand, Guid>
 {
     public async Task<Result<Guid>> Handle(CreateProductCommand command, CancellationToken cancellationToken)
     {
+        //var result = await validator.ValidateAsync(command, cancellationToken);
+        //var errors = result.Errors.Select(x => new ValidationError(x.PropertyName, x.ErrorMessage)).ToArray();
+        //if (errors.Any())
+        //{
+        //    return errors;
+        //}
+
+        logger.LogInformation("CreateProductHandler.Handle called with {@Command}", command);
+
         Product product = Product.Create(
             command.Name,
             command.Category,

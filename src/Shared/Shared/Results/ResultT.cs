@@ -1,10 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace Shared.Results;
+﻿namespace Shared.Results;
 
 public class Result<TValue> : Result
 {
-    private Result(TValue? value, bool isSuccess, Error error)
+    protected Result(TValue? value, bool isSuccess, Error error)
         : base(isSuccess, error)
     {
         Value = value;
