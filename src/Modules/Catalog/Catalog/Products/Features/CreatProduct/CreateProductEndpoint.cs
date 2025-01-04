@@ -1,6 +1,6 @@
-﻿namespace Catalog.Products.Features.CreatProduct;
+﻿namespace Catalog.Products.Features.CreateProduct;
 
-public record CreatProductRequest(
+public record CreateProductRequest(
     string Name,
     List<string> Category,
     string Description,
@@ -15,10 +15,10 @@ public class CreateProductEndpoint : ICarterModule
             .WithTags("Products")
             .WithName("CreateProduct");
 
-        static async Task<ModelResult<Guid>> CreateProduct(CreatProductRequest request, ISender sender)
+        static async Task<ModelResult<Guid>> CreateProduct(CreateProductRequest request, ISender sender)
         {
-            CreatProductComand comand = request.Adapt<CreatProductComand>();
-            return await sender.Send(comand);
+            CreateProductCommand command = request.Adapt<CreateProductCommand>();
+            return await sender.Send(command);
 
             //return Results.Created($"/products/{productId.Value}", productId.Value);
         }

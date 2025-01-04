@@ -1,12 +1,12 @@
 ﻿namespace Catalog.Products.Features.DeleteProduct;
 
-public record DeleteProductComand(Guid Id) : ICommand;
+public record DeleteProductCommand(Guid Id) : ICommand;
 
-internal class DeleteProductHandler(CatalogDbContext dbContext) : ICommandHandler<DeleteProductComand>
+internal class DeleteProductHandler(CatalogDbContext dbContext) : ICommandHandler<DeleteProductCommand>
 {
-    public async Task<Result> Handle(DeleteProductComand request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
     {
-        Product? product = await dbContext.Products.FindAsync([request.Id], cancellationToken: cancellationToken);
+        Product? product = await dbContext.Products.FindAsync(new object[] { request.Id }, cancellationToken: cancellationToken);
 
         if (product is null)
             return Error.ProductNotFound;

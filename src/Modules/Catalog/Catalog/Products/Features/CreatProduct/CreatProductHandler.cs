@@ -1,6 +1,6 @@
-﻿namespace Catalog.Products.Features.CreatProduct;
+﻿namespace Catalog.Products.Features.CreateProduct;
 
-public record CreatProductComand(
+public record CreateProductCommand(
     string Name,
     List<string> Category,
     string Description,
@@ -8,17 +8,28 @@ public record CreatProductComand(
     string ImageFile)
     : ICommand<Guid>;
 
-public class CreatProductHandler(CatalogDbContext dbContext) : ICommandHandler<CreatProductComand, Guid>
+public class CreateProductCommandValidator : AbstractValidator<CreateProductCommand>
 {
-    public async Task<Result<Guid>> Handle(CreatProductComand comand, CancellationToken cancellationToken)
+    public CreateProductCommandValidator()
+    {
+        RuleFor(x => x.Name).NotEmpty().WithMessage("Name is required");
+        RuleFor(x => x.Category).NotEmpty().WithMessage("Category is required");
+        RuleFor(x => x.ImageFile).NotEmpty().WithMessage("ImageFile is required");
+        RuleFor(x => x.Price).GreaterThan(0).WithMessage("Price must be greater than 0");
+    }
+}
+
+public class CreateProductHandler(CatalogDbContext dbContext) : ICommandHandler<CreateProductCommand, Guid>
+{
+    public async Task<Result<Guid>> Handle(CreateProductCommand command, CancellationToken cancellationToken)
     {
         Product product = Product.Create(
-            comand.Name,
-            comand.Category,
-            comand.Description,
-            comand.ImageFile,
-            comand.Price);
-        
+            command.Name,
+            command.Category,
+            command.Description,
+            command.ImageFile,
+            command.Price);
+
         dbContext.Products.Add(product);
         await dbContext.SaveChangesAsync(cancellationToken);
 

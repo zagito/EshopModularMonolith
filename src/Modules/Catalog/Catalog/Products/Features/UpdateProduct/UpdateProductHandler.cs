@@ -1,6 +1,6 @@
 ﻿namespace Catalog.Products.Features.UpdateProduct;
 
-public record UpdateProductComand(
+public record UpdateProductCommand( 
     Guid Id,
     string Name,
     List<string> Category,
@@ -9,11 +9,11 @@ public record UpdateProductComand(
     string ImageFile)
     : ICommand;
 
-public class UpdateProductHandler(CatalogDbContext dbContext) : ICommandHandler<UpdateProductComand>
+public class UpdateProductHandler(CatalogDbContext dbContext) : ICommandHandler<UpdateProductCommand> 
 {
-    public async Task<Result> Handle(UpdateProductComand request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(UpdateProductCommand request, CancellationToken cancellationToken) 
     {
-        Product? product = await dbContext.Products.FindAsync([request.Id], cancellationToken : cancellationToken);
+        Product? product = await dbContext.Products.FindAsync([request.Id], cancellationToken: cancellationToken);
 
         if (product is null)
             return Error.ProductNotFound;

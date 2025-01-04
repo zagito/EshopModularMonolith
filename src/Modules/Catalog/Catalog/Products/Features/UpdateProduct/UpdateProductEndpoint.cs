@@ -17,8 +17,8 @@ public class UpdateProductEndpoint : ICarterModule
 
         static async Task<ModelResult> UpdateProduct(Guid id, UpdateProductRequest request, ISender sender)
         {
-            UpdateProductComand comand = request.Adapt<UpdateProductComand>() with { Id = id };
-            return await sender.Send(comand);
+            UpdateProductCommand command = request.Adapt<UpdateProductCommand>() with { Id = id };
+            return await sender.Send(command);
         }
     }
 }
