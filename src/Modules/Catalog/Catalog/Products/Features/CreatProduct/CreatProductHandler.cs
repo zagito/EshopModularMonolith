@@ -1,6 +1,4 @@
-﻿using MediatR;
-
-namespace Catalog.Products.Features.CreatProduct;
+﻿namespace Catalog.Products.Features.CreatProduct;
 
 public record CreatProductComand(
     string Name,
@@ -8,14 +6,22 @@ public record CreatProductComand(
     string Description,
     decimal Price,
     string ImageFile)
-    : IRequest<CreatProductResult>;
+    : ICommand<Guid>;
 
-public record CreatProductResult(Guid Id);
-
-public class CreatProductComandHandler : IRequestHandler<CreatProductComand, CreatProductResult>
+public class CreatProductHandler(CatalogDbContext dbContext) : ICommandHandler<CreatProductComand, Guid>
 {
-    public Task<CreatProductResult> Handle(CreatProductComand request, CancellationToken cancellationToken)
+    public async Task<Result<Guid>> Handle(CreatProductComand comand, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        Product product = Product.Create(
+            comand.Name,
+            comand.Category,
+            comand.Description,
+            comand.ImageFile,
+            comand.Price);
+        
+        dbContext.Products.Add(product);
+        await dbContext.SaveChangesAsync(cancellationToken);
+
+        return product.Id;
     }
 }

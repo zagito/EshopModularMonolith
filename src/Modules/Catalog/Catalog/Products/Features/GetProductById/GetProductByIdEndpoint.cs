@@ -1,0 +1,19 @@
+﻿using Catalog.Products.Dtos;
+
+namespace Catalog.Products.Features.GetProductById;
+
+public class GetProductByIdEndpoint : ICarterModule
+{
+    public void AddRoutes(IEndpointRouteBuilder app)
+    {
+        app.MapGet("/products/{id:guid}", GetProductById)
+            .WithTags("Products")
+            .WithName("GetProductById");
+
+        static async Task<ModelResult<ProductDto>> GetProductById(Guid id, ISender sender)
+        {
+            GetProductByIdQuery query = new(id);
+            return await sender.Send(query);
+        }
+    }
+}
