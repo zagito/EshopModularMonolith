@@ -1,14 +1,19 @@
-﻿using Catalog.Products.Dtos;
+﻿using Shared.Pagination;
 
 namespace Catalog.Products.Features.GetProducts;
 
-public record GetProductsQuery() : IQuery<IEnumerable<ProductDto>>;
+public record GetProductsQuery(PaginationRequest Request) : IQuery<PaginationResult<ProductDto>>;
 
-public class GetProductsHandler(CatalogDbContext dbContext) : IQueryHandler<GetProductsQuery, IEnumerable<ProductDto>>
+public class GetProductsHandler(CatalogDbContext dbContext) : IQueryHandler<GetProductsQuery, PaginationResult<ProductDto>>
 {
-    public async Task<Result<IEnumerable<ProductDto>>> Handle(GetProductsQuery request, CancellationToken cancellationToken)
+    public async Task<Result<PaginationResult<ProductDto>>> Handle(GetProductsQuery request, CancellationToken cancellationToken)
     {
-        return await dbContext.Products
+        var pageIndex = request.Request.PageIndex;
+        var pageSize = request.Request.PageSize;
+
+        var count = await dbContext.Products.LongCountAsync(cancellationToken);
+
+        var products = await dbContext.Products
             .AsNoTracking()
             .OrderBy(p => p.Name)
             .Select(p => new ProductDto(
@@ -18,6 +23,10 @@ public class GetProductsHandler(CatalogDbContext dbContext) : IQueryHandler<GetP
                 p.Description,
                 p.ImageFile,
                 p.Price))
+            .Skip(pageIndex * pageSize)
+            .Take(pageSize)
             .ToListAsync(cancellationToken);
+
+        return new PaginationResult<ProductDto>(pageIndex, pageSize, count, products);
     }
 }

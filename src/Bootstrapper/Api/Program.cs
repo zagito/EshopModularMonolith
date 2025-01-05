@@ -1,10 +1,12 @@
-using Scalar.AspNetCore;
-
 var builder = WebApplication.CreateBuilder(args);
 
-builder.AddServiceDefaults();
+builder.AddSeqEndpoint(connectionName: "seq");
+
+builder.Host.UseSerilog((context, configuration) =>
+    configuration.ReadFrom.Configuration(context.Configuration));
 
 // Add services to the container.
+builder.AddServiceDefaults();
 builder.Services.AddOpenApi();
 
 builder.Services.AddCarterWithAssemblies(typeof(CatalogModule).Assembly);
@@ -14,12 +16,13 @@ builder.Services
     .AddBasketModule(builder.Configuration)
     .AddOrderingModule(builder.Configuration);
 
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+
 var app = builder.Build();
 
-//app.MapDefaultEndpoints();
+// Configure the HTTP request pipeline.
 app.MapOpenApi();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwaggerUI(options =>
@@ -31,6 +34,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.MapCarter();
+app.UseSerilogRequestLogging();
+app.UseExceptionHandler("/error");
 
 app.UseCatalogModule()
    .UseBasketModule()

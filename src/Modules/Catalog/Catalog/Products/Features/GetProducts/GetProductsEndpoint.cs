@@ -1,4 +1,4 @@
-﻿using Catalog.Products.Dtos;
+﻿using Shared.Pagination;
 
 namespace Catalog.Products.Features.GetProducts;
 
@@ -10,9 +10,10 @@ public class GetProductsEndpoint : ICarterModule
             .WithTags("Products")
             .WithName("GetAllProducts");
 
-        static async Task<ModelResult<IEnumerable<ProductDto>>> GetAllProducts(ISender sender)
+        static async Task<EndpointResult<PaginationResult<ProductDto>>> GetAllProducts
+            ([AsParameters] PaginationRequest request, ISender sender)
         {
-            GetProductsQuery query = new();
+            GetProductsQuery query = new(request);
             return await sender.Send(query);
         }
     }

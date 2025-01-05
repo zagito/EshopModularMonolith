@@ -15,7 +15,7 @@ public class CreateProductEndpoint : ICarterModule
             .WithTags("Products")
             .WithName("CreateProduct");
 
-        static async Task<ModelResult<Guid>> CreateProduct(CreateProductRequest request, ISender sender)
+        static async Task<EndpointResult<Guid>> CreateProduct(CreateProductRequest request, ISender sender)
         {
             CreateProductCommand command = request.Adapt<CreateProductCommand>();
             return await sender.Send(command);

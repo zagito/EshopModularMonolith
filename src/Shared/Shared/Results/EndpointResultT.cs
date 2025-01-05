@@ -2,7 +2,7 @@
 
 namespace Shared.Results;
 
-public class ModelResult<T>(Result<T> result) : IResult
+public class EndpointResult<T>(Result<T> result) : IResult
 {
     public Task ExecuteAsync(HttpContext httpContext) =>
         result switch
@@ -12,5 +12,5 @@ public class ModelResult<T>(Result<T> result) : IResult
             _ => TypedResults.BadRequest(result.Error).ExecuteAsync(httpContext)
         };
 
-    public static implicit operator ModelResult<T>(Result<T> wrapper) => new(wrapper);
+    public static implicit operator EndpointResult<T>(Result<T> wrapper) => new(wrapper);
 }

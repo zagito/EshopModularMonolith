@@ -1,6 +1,4 @@
-﻿using Catalog.Products.Dtos;
-
-namespace Catalog.Products.Features.GetProductByCategory;
+﻿namespace Catalog.Products.Features.GetProductByCategory;
 
 public class GetProductByCategoryEndpoint : ICarterModule
 {
@@ -10,7 +8,7 @@ public class GetProductByCategoryEndpoint : ICarterModule
             .WithTags("Products")
             .WithName("GetProductByCategory");
 
-        static async Task<ModelResult<IEnumerable<ProductDto>>> GetProductByCategory(string category, ISender sender)
+        static async Task<EndpointResult<IEnumerable<ProductDto>>> GetProductByCategory(string category, ISender sender)
         {
             GetProductByCategoryQuery query = new(category);
             return await sender.Send(query);

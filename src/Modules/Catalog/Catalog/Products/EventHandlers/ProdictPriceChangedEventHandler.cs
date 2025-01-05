@@ -1,6 +1,6 @@
 ﻿namespace Catalog.Products.EventHandlers;
 
-public class ProdictPriceChangedEventHandler(ILogger<ProductPriceChangedEvent> logger) : INotificationHandler<ProductPriceChangedEvent>
+public class ProductPriceChangedEventHandler(ILogger<ProductPriceChangedEvent> logger) : INotificationHandler<ProductPriceChangedEvent>
 {
     public Task Handle(ProductPriceChangedEvent notification, CancellationToken cancellationToken)
     {

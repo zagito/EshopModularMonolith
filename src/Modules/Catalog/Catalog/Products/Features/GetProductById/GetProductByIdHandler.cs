@@ -1,6 +1,4 @@
-﻿using Catalog.Products.Dtos;
-
-namespace Catalog.Products.Features.GetProductById;
+﻿namespace Catalog.Products.Features.GetProductById;
 
 public record GetProductByIdQuery(Guid Id) : IQuery<ProductDto>;
 

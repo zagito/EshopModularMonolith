@@ -6,9 +6,9 @@ namespace Basket;
 
 public static class BasketModule
 {
-    public static IServiceCollection AddBasketModule(this IServiceCollection service, IConfiguration configuration)
+    public static IServiceCollection AddBasketModule(this IServiceCollection services, IConfiguration configuration)
     {
-        return service;
+        return services;
     }
 
     public static IApplicationBuilder UseBasketModule(this IApplicationBuilder app)

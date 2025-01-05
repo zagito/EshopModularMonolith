@@ -15,6 +15,7 @@ public static class CatalogModule
         {
             config.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly());
             config.AddOpenBehavior(typeof(ValidationPipelineBehavior<,>));
+            config.AddOpenBehavior(typeof(LoggingPipelineBehavior<,>));
         });
 
         service.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());

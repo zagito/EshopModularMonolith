@@ -1,6 +1,4 @@
-﻿using Catalog.Products.Dtos;
-
-namespace Catalog.Products.Features.GetProductByCategory;
+﻿namespace Catalog.Products.Features.GetProductByCategory;
 
 public record GetProductByCategoryQuery(string Category) : IQuery<IEnumerable<ProductDto>>;
 

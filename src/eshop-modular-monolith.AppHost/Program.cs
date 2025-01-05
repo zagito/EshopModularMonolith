@@ -9,9 +9,16 @@ var eshopDb = builder.AddPostgres("eshop-db")
     .WithPgAdmin()
     .AddDatabase(eshopDbName);
 
+var seq = builder.AddSeq("seq")
+    .WithDataVolume()
+    .ExcludeFromManifest()
+    .WithLifetime(ContainerLifetime.Persistent);
+
 builder.AddProject<Projects.Api>("api")
-    //.WithHttpsEndpoint(port: 5050, name: "eshop")
     .WithReference(eshopDb)
-    .WaitFor(eshopDb);
+    .WithReference(seq)
+    .WaitFor(eshopDb)
+    .WaitFor(seq);
+
 
 builder.Build().Run();

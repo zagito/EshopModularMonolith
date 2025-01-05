@@ -10,7 +10,7 @@ public class DeleteProductEndpoint : ICarterModule
             .WithTags("Products")
             .WithName("DeleteProduct");
 
-        static async Task<ModelResult> DeleteProduct(Guid id, ISender sender)
+        static async Task<EndpointResult> DeleteProduct(Guid id, ISender sender)
         {
             DeleteProductCommand command = new(id);
             return await sender.Send(command);

@@ -8,7 +8,7 @@ public static class CarterExtensions
 {
     public static IServiceCollection AddCarterWithAssemblies(this IServiceCollection services, params Assembly[] assemblies)
     {
-        services.AddCarter(configurator: config  =>
+        services.AddCarter(configurator: config =>
         {
             foreach (Assembly assembly in assemblies)
             {

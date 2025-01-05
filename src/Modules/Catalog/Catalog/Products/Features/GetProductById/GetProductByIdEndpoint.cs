@@ -1,6 +1,4 @@
-﻿using Catalog.Products.Dtos;
-
-namespace Catalog.Products.Features.GetProductById;
+﻿namespace Catalog.Products.Features.GetProductById;
 
 public class GetProductByIdEndpoint : ICarterModule
 {
@@ -10,7 +8,7 @@ public class GetProductByIdEndpoint : ICarterModule
             .WithTags("Products")
             .WithName("GetProductById");
 
-        static async Task<ModelResult<ProductDto>> GetProductById(Guid id, ISender sender)
+        static async Task<EndpointResult<ProductDto>> GetProductById(Guid id, ISender sender)
         {
             GetProductByIdQuery query = new(id);
             return await sender.Send(query);
