@@ -1,6 +1,9 @@
-﻿namespace Basket.Data;
+﻿using Basket.ShoppingCarts.Models;
 
-public class BasketDbContext(DbContextOptions<BasketDbContext> options) : DbContext(options)
+namespace Basket.Data;
+
+public class BasketDbContext(DbContextOptions<BasketDbContext> options) 
+    : DbContext(options)
 {
     public DbSet<ShoppingCart> ShoppingCarts => Set<ShoppingCart>();
     public DbSet<ShoppingCartItem> ShoppingCartItems => Set<ShoppingCartItem>();

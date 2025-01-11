@@ -1,3 +1,5 @@
+using Microsoft.Extensions.Caching.Hybrid;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddSeqEndpoint(connectionName: "seq");
@@ -9,7 +11,28 @@ builder.Host.UseSerilog((context, configuration) =>
 builder.AddServiceDefaults();
 builder.Services.AddOpenApi();
 
-builder.Services.AddCarterWithAssemblies(typeof(CatalogModule).Assembly);
+#pragma warning disable EXTEXP0018
+builder.Services.AddHybridCache(options =>
+{
+    options.DefaultEntryOptions = new HybridCacheEntryOptions
+    {
+        LocalCacheExpiration = TimeSpan.FromMinutes(5),
+        Expiration = TimeSpan.FromMinutes(10),
+        
+    };
+});
+#pragma warning restore EXTEXP0018
+
+builder.AddRedisDistributedCache("redis");
+
+var catalogAssemblies = typeof(CatalogModule).Assembly;
+var basketAssemblies = typeof(BasketModule).Assembly;
+
+builder.Services.AddCarterWithAssemblies(
+   catalogAssemblies,
+   basketAssemblies);
+
+builder.Services.AddMediatRWithAssemblies(catalogAssemblies, basketAssemblies);
 
 builder.Services
     .AddCatalogModule(builder.Configuration)

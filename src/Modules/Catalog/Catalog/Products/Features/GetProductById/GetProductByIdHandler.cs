@@ -1,7 +1,5 @@
 ﻿namespace Catalog.Products.Features.GetProductById;
 
-public record GetProductByIdQuery(Guid Id) : IQuery<ProductDto>;
-
 public class GetProductByIdHandler(CatalogDbContext dbContext) : IQueryHandler<GetProductByIdQuery, ProductDto>
 {
     public async Task<Result<ProductDto>> Handle(GetProductByIdQuery request, CancellationToken cancellationToken)

@@ -8,10 +8,13 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Shared\Shared\Shared.csproj" />
+    <ProjectReference Include="..\..\Catalog\CatalogContracts\CatalogContracts.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Data\Configurations\" />
+    <Folder Include="ShoppingCarts\EventHandlers\" />
+    <Folder Include="ShoppingCarts\Features\CheckoutShoppingCart\" />
+    <Folder Include="ShoppingCarts\Features\UpdateItemPriceInShoppingCart\" />
   </ItemGroup>
 
 </Project>
