@@ -16,13 +16,23 @@ var seq = builder.AddSeq("seq")
 var redis = builder.AddRedis("redis")
     .WithDataVolume();
 
+var rabbitMq = builder.AddRabbitMQ("eshop-mq")
+    .WithManagementPlugin();
+
+var keycloak = builder.AddKeycloak("keycloak", 8080)
+    .WithDataVolume()
+    .WithExternalHttpEndpoints();
+
 builder.AddProject<Projects.Api>("api")
     .WithReference(eshopDb)
     .WithReference(seq)
     .WithReference(redis)
+    .WithReference(rabbitMq)
+    .WithReference(keycloak)
     .WaitFor(eshopDb)
     .WaitFor(seq)
-    .WaitFor(redis);
-
+    .WaitFor(redis)
+    .WaitFor(rabbitMq)
+    .WaitFor(keycloak);
 
 builder.Build().Run();

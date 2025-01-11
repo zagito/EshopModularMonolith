@@ -1,5 +1,3 @@
-using Microsoft.Extensions.Caching.Hybrid;
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddSeqEndpoint(connectionName: "seq");
@@ -34,12 +32,23 @@ builder.Services.AddCarterWithAssemblies(
 
 builder.Services.AddMediatRWithAssemblies(catalogAssemblies, basketAssemblies);
 
+builder.Services.AddMassTransitWithAssemblies(builder.Configuration, catalogAssemblies, basketAssemblies);
+
 builder.Services
     .AddCatalogModule(builder.Configuration)
     .AddBasketModule(builder.Configuration)
     .AddOrderingModule(builder.Configuration);
 
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+
+builder.Services.AddAuthorization();
+
+builder.Services.AddAuthentication()
+    .AddKeycloakJwtBearer("keycloak", realm: "eshop", options => 
+    { 
+        options.RequireHttpsMetadata = false;
+        options.Audience = "account";
+    });
 
 var app = builder.Build();
 
@@ -63,5 +72,9 @@ app.UseExceptionHandler("/error");
 app.UseCatalogModule()
    .UseBasketModule()
    .UseOrderingModule();
+
+app.UseAuthentication();
+
+app.UseAuthorization();
 
 app.Run();

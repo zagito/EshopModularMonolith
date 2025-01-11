@@ -27,7 +27,7 @@ public class ShoppingCartItem : Entity<Guid>
         ProductName = productName;
     }
 
-    public ShoppingCartItem(Guid id, Guid shoppingCartId, Guid productId, int quantity, string color, decimal price, string productName)
+    internal ShoppingCartItem(Guid id, Guid shoppingCartId, Guid productId, int quantity, string color, decimal price, string productName)
         : this(shoppingCartId, productId, quantity, color, price, productName)
     {
         Id = id;
@@ -37,5 +37,11 @@ public class ShoppingCartItem : Entity<Guid>
     {
         ArgumentOutOfRangeException.ThrowIfNegative(quantity);
         Quantity += quantity;
+    }
+
+    internal void UpdatePrice(decimal price)
+    {
+        ArgumentOutOfRangeException.ThrowIfNegative(price);
+        Price = price;
     }
 }

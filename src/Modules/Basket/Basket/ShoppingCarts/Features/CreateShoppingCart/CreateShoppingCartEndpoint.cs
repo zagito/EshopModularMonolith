@@ -1,4 +1,8 @@
-﻿namespace Basket.ShoppingCarts.Features.CreateShoppingCart;
+﻿using System.Security.Claims;
+
+namespace Basket.ShoppingCarts.Features.CreateShoppingCart;
+
+internal record CreateShoppingCartRequest(List<ShoppingCartItem> Items);
 
 public class CreateShoppingCartEndpoint : ICarterModule
 {
@@ -6,11 +10,14 @@ public class CreateShoppingCartEndpoint : ICarterModule
     {
         app.MapPost("/shopping-carts", CreateShoppingCart)
             .WithTags("ShoppingCart")
-            .WithName("CreateShoppingCart");
+            .WithName("CreateShoppingCart")
+            .RequireAuthorization();
 
-        static async Task<EndpointResult<Guid>> CreateShoppingCart(CreateShoppingCartCommand request, ISender sender)
+        static async Task<EndpointResult<Guid>> CreateShoppingCart(CreateShoppingCartRequest request, ISender sender, ClaimsPrincipal principal)
         {
-            return await sender.Send(request);
+            var email = principal.FindFirst(ClaimTypes.Email)?.Value;
+            var command = new CreateShoppingCartCommand(email!, request.Items);
+            return await sender.Send(command);
         }
     }
 }
