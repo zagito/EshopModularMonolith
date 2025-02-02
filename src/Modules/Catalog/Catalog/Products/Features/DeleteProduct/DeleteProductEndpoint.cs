@@ -1,7 +1,5 @@
 ﻿namespace Catalog.Products.Features.DeleteProduct;
 
-//public record DeleteProductRequest(Guid Id);
-
 public class DeleteProductEndpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)

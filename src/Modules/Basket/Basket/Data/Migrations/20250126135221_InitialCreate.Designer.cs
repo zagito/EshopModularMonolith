@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Basket.Data.Migrations
 {
     [DbContext(typeof(BasketDbContext))]
-    [Migration("20250105115306_InitialCreate")]
+    [Migration("20250126135221_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -26,7 +26,46 @@ namespace Basket.Data.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Basket.Baskets.Models.ShoppingCart", b =>
+            modelBuilder.Entity("Basket.ShoppingCarts.Models.OutboxMessage", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("LastModified")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("OccurredOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("ProcessedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("OutboxMessages", "basket");
+                });
+
+            modelBuilder.Entity("Basket.ShoppingCarts.Models.ShoppingCart", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -57,7 +96,7 @@ namespace Basket.Data.Migrations
                     b.ToTable("ShoppingCarts", "basket");
                 });
 
-            modelBuilder.Entity("Basket.Baskets.Models.ShoppingCartItem", b =>
+            modelBuilder.Entity("Basket.ShoppingCarts.Models.ShoppingCartItem", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -104,16 +143,16 @@ namespace Basket.Data.Migrations
                     b.ToTable("ShoppingCartItems", "basket");
                 });
 
-            modelBuilder.Entity("Basket.Baskets.Models.ShoppingCartItem", b =>
+            modelBuilder.Entity("Basket.ShoppingCarts.Models.ShoppingCartItem", b =>
                 {
-                    b.HasOne("Basket.Baskets.Models.ShoppingCart", null)
+                    b.HasOne("Basket.ShoppingCarts.Models.ShoppingCart", null)
                         .WithMany("Items")
                         .HasForeignKey("ShoppingCartId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Basket.Baskets.Models.ShoppingCart", b =>
+            modelBuilder.Entity("Basket.ShoppingCarts.Models.ShoppingCart", b =>
                 {
                     b.Navigation("Items");
                 });

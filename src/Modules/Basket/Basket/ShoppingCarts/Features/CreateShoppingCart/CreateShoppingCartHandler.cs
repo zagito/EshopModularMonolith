@@ -44,7 +44,7 @@ internal class CreateShoppingCartHandler(IShoppingCartRepository repository, ISe
             var productResult = await sender.Send(new GetProductByIdQuery(item.ProductId));
 
             if (productResult.IsFailure)
-                return Error.ProductNotFound;
+                return productResult.Error!;
 
             shoppingCart.AddItem(item.ProductId, productResult.Value!.Name, productResult.Value!.Price, item.Quantity, item.Color);
         }

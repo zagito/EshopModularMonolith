@@ -23,16 +23,15 @@ builder.Services.AddHybridCache(options =>
 
 builder.AddRedisDistributedCache("redis");
 
-var catalogAssemblies = typeof(CatalogModule).Assembly;
-var basketAssemblies = typeof(BasketModule).Assembly;
+var catalogAssembly = typeof(CatalogModule).Assembly;
+var basketAssembly = typeof(BasketModule).Assembly;
+var orderingAssembly = typeof(OrderingModule).Assembly;   
 
-builder.Services.AddCarterWithAssemblies(
-   catalogAssemblies,
-   basketAssemblies);
+builder.Services.AddCarterForAssemblies(catalogAssembly, basketAssembly, orderingAssembly);
 
-builder.Services.AddMediatRWithAssemblies(catalogAssemblies, basketAssemblies);
+builder.Services.AddMediatRForAssemblies(catalogAssembly, basketAssembly, orderingAssembly);
 
-builder.Services.AddMassTransitWithAssemblies(builder.Configuration, catalogAssemblies, basketAssemblies);
+builder.Services.AddMassTransitForAssemblies(builder.Configuration, catalogAssembly, basketAssembly, orderingAssembly);
 
 builder.Services
     .AddCatalogModule(builder.Configuration)

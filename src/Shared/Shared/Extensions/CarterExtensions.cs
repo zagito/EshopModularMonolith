@@ -6,7 +6,7 @@ namespace Shared.Extensions;
 
 public static class CarterExtensions
 {
-    public static IServiceCollection AddCarterWithAssemblies(this IServiceCollection services, params Assembly[] assemblies)
+    public static IServiceCollection AddCarterForAssemblies(this IServiceCollection services, params Assembly[] assemblies)
     {
         services.AddCarter(configurator: config =>
         {
