@@ -4,8 +4,8 @@ public class GetOrderByIdEndpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapGet("/orders/{orderId:guid}", GetOrderById)
-            .WithTags("Orders")
+        app.MapGet($"{OrdersRoute}/{{orderId:guid}}", GetOrderById)
+            .WithTags(OrdersTag)
             .WithName(nameof(GetOrderById));
     }
 

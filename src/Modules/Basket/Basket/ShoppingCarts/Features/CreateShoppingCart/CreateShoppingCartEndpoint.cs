@@ -8,16 +8,16 @@ public class CreateShoppingCartEndpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapPost("/shopping-carts", CreateShoppingCart)
-            .WithTags("ShoppingCart")
-            .WithName("CreateShoppingCart")
+        app.MapPost(ShoppingCartsRoot, CreateShoppingCart)
+            .WithTags(ShoppingCartsTag)
+            .WithName(nameof(CreateShoppingCart))
             .RequireAuthorization();
+    }
 
-        static async Task<EndpointResult<Guid>> CreateShoppingCart(CreateShoppingCartRequest request, ISender sender, ClaimsPrincipal principal)
-        {
-            var email = principal.FindFirst(ClaimTypes.Email)?.Value;
-            var command = new CreateShoppingCartCommand(email!, request.Items);
-            return await sender.Send(command);
-        }
+    private static async Task<EndpointResult<Guid>> CreateShoppingCart(CreateShoppingCartRequest request, ISender sender, ClaimsPrincipal principal)
+    {
+        var email = principal.FindFirst(ClaimTypes.Email)?.Value;
+        var command = new CreateShoppingCartCommand(email!, request.Items);
+        return await sender.Send(command);
     }
 }

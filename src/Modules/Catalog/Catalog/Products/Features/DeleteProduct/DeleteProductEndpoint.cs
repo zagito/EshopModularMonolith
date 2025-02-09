@@ -4,8 +4,8 @@ public class DeleteProductEndpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapDelete("/products/{id:guid}", DeleteProduct)
-            .WithTags(ProductsRoot)
+        app.MapDelete($"{ProductsRoot}/{{id:guid}}", DeleteProduct)
+            .WithTags(ProductsTag)
             .WithName(nameof(DeleteProduct));
     }
 

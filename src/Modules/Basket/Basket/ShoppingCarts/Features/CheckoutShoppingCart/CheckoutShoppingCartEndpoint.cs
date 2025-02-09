@@ -5,9 +5,9 @@ public class CheckoutShoppingCartEndpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapPost("/shopping-carts/checkout", CheckoutShoppingCart)
-           .WithTags("ShoppingCart")
-           .WithName("CheckoutShoppingCart");
+        app.MapPost($"{ShoppingCartsRoot}/checkout", CheckoutShoppingCart)
+           .WithTags(ShoppingCartsTag)
+           .WithName(nameof(CheckoutShoppingCart));
     }
 
     private static async Task<EndpointResult> CheckoutShoppingCart(

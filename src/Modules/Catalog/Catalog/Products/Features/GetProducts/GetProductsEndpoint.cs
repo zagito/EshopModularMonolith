@@ -6,8 +6,8 @@ public class GetProductsEndpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapGet("/products", GetAllProducts)
-            .WithTags(ProductsRoot)
+        app.MapGet(ProductsRoot, GetAllProducts)
+            .WithTags(ProductsTag)
             .WithName(nameof(GetAllProducts));
     }
 

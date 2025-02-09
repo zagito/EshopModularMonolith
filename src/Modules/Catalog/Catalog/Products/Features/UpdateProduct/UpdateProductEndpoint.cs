@@ -11,8 +11,8 @@ public class UpdateProductEndpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapPut("/products/{id:guid}", UpdateProduct)
-            .WithTags(ProductsRoot)
+        app.MapPut($"{ProductsRoot}/{{id:guid}}", UpdateProduct)
+            .WithTags(ProductsTag)
             .WithName(nameof(UpdateProduct));
     }
 

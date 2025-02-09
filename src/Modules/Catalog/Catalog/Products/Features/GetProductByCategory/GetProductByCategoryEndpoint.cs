@@ -4,8 +4,8 @@ public class GetProductByCategoryEndpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapGet("/products/category/{category}", GetProductByCategory)
-            .WithTags(ProductsRoot)
+        app.MapGet($"{ProductsRoot}/category/{{category}}", GetProductByCategory)
+            .WithTags(ProductsTag)
             .WithName(nameof(GetProductByCategory));
     }
 

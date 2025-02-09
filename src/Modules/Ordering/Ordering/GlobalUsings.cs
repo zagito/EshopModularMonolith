@@ -18,3 +18,4 @@ global using SharedContracts.Results;
 global using System.Reflection;
 global using Microsoft.AspNetCore.Http;
 global using Microsoft.AspNetCore.Mvc;
+global using static Ordering.Orders.Utils.OrdersConstants;

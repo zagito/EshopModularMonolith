@@ -6,8 +6,8 @@ internal class GetOrdersEndpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapGet("/orders", GetOrders)
-            .WithTags("Orders")
+        app.MapGet(OrdersRoute, GetOrders)
+            .WithTags(OrdersTag)
             .WithName(nameof(GetOrders));
     }
 

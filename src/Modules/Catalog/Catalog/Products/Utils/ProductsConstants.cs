@@ -2,5 +2,6 @@
 
 public static class ProductsConstants
 {
-    public const string ProductsRoot = "Products";
+    public const string ProductsTag = "Products";
+    public const string ProductsRoot = "/products";
 }

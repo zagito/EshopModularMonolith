@@ -4,8 +4,8 @@ public class DeleteOrderEndpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapDelete("/orders/{orderId:guid}", DeleteOrder)
-            .WithTags("Orders")
+        app.MapDelete($"{OrdersRoute}/{{orderId:guid}}", DeleteOrder)
+            .WithTags(OrdersTag)
             .WithName(nameof(DeleteOrder));
     }
 

@@ -11,8 +11,8 @@ public class CreateProductEndpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapPost("/products", CreateProduct)
-            .WithTags(ProductsRoot)
+        app.MapPost(ProductsRoot, CreateProduct)
+            .WithTags(ProductsTag)
             .WithName(nameof(CreateProduct));
     }
 
