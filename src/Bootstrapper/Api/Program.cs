@@ -7,7 +7,6 @@ builder.Host.UseSerilog((context, configuration) =>
 
 // Add services to the container.
 builder.AddServiceDefaults();
-builder.Services.AddOpenApi();
 
 #pragma warning disable EXTEXP0018
 builder.Services.AddHybridCache(options =>
@@ -49,19 +48,28 @@ builder.Services.AddAuthentication()
         options.Audience = "account";
     });
 
+builder.Services.AddOpenApi();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-app.MapOpenApi();
+
 
 if (app.Environment.IsDevelopment())
 {
+    app.MapOpenApi();
+
     app.UseSwaggerUI(options =>
     {
-        options.SwaggerEndpoint("/openapi/v1.json", "v1");
+        options.SwaggerEndpoint("/openapi/v1.json", "OpenAPI V1");
     });
 
-    app.MapScalarApiReference(o => o.WithTheme(ScalarTheme.DeepSpace));
+    app.UseReDoc(options =>
+    {
+        options.SpecUrl("/openapi/v1.json");
+    });
+
+    app.MapScalarApiReference(o => o.WithTheme(ScalarTheme.DeepSpace).Servers = []);
 }
 
 app.MapCarter();

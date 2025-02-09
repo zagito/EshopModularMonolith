@@ -1,3 +1,5 @@
+using EshopModularMonolith.AppHost;
+
 var builder = DistributedApplication.CreateBuilder(args);
 
 var eshopDbName = "eshopdb";
@@ -33,6 +35,9 @@ builder.AddProject<Projects.Api>("api")
     .WaitFor(seq)
     .WaitFor(redis)
     .WaitFor(rabbitMq)
-    .WaitFor(keycloak);
+    .WaitFor(keycloak)
+    .WithSwaggerUi()
+    .WithScalar()
+    .WithReDoc();
 
 builder.Build().Run();
