@@ -12,13 +12,13 @@ public class UpdateProductEndpoint : ICarterModule
     public void AddRoutes(IEndpointRouteBuilder app)
     {
         app.MapPut("/products/{id:guid}", UpdateProduct)
-            .WithTags("Products")
-            .WithName("UpdateProduct");
+            .WithTags(ProductsRoot)
+            .WithName(nameof(UpdateProduct));
+    }
 
-        static async Task<EndpointResult> UpdateProduct(Guid id, UpdateProductRequest request, ISender sender)
-        {
-            UpdateProductCommand command = request.Adapt<UpdateProductCommand>() with { Id = id };
-            return await sender.Send(command);
-        }
+    private static async Task<EndpointResult> UpdateProduct(Guid id, UpdateProductRequest request, ISender sender)
+    {
+        UpdateProductCommand command = request.Adapt<UpdateProductCommand>() with { Id = id };
+        return await sender.Send(command);
     }
 }

@@ -5,13 +5,13 @@ public class DeleteProductEndpoint : ICarterModule
     public void AddRoutes(IEndpointRouteBuilder app)
     {
         app.MapDelete("/products/{id:guid}", DeleteProduct)
-            .WithTags("Products")
-            .WithName("DeleteProduct");
+            .WithTags(ProductsRoot)
+            .WithName(nameof(DeleteProduct));
+    }
 
-        static async Task<EndpointResult> DeleteProduct(Guid id, ISender sender)
-        {
-            DeleteProductCommand command = new(id);
-            return await sender.Send(command);
-        }
+    private static async Task<EndpointResult> DeleteProduct(Guid id, ISender sender)
+    {
+        DeleteProductCommand command = new(id);
+        return await sender.Send(command);
     }
 }

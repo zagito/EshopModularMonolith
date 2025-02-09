@@ -12,15 +12,15 @@ public class CreateProductEndpoint : ICarterModule
     public void AddRoutes(IEndpointRouteBuilder app)
     {
         app.MapPost("/products", CreateProduct)
-            .WithTags("Products")
-            .WithName("CreateProduct");
+            .WithTags(ProductsRoot)
+            .WithName(nameof(CreateProduct));
+    }
 
-        static async Task<EndpointResult<Guid>> CreateProduct(CreateProductRequest request, ISender sender)
-        {
-            CreateProductCommand command = request.Adapt<CreateProductCommand>();
-            return await sender.Send(command);
+    private static async Task<EndpointResult<Guid>> CreateProduct(CreateProductRequest request, ISender sender)
+    {
+        CreateProductCommand command = request.Adapt<CreateProductCommand>();
+        return await sender.Send(command);
 
-            //return Results.Created($"/products/{productId.Value}", productId.Value);
-        }
+        //return Results.Created($"/products/{productId.Value}", productId.Value);
     }
 }

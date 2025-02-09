@@ -7,14 +7,14 @@ public class GetProductsEndpoint : ICarterModule
     public void AddRoutes(IEndpointRouteBuilder app)
     {
         app.MapGet("/products", GetAllProducts)
-            .WithTags("Products")
-            .WithName("GetAllProducts");
+            .WithTags(ProductsRoot)
+            .WithName(nameof(GetAllProducts));
+    }
 
-        static async Task<EndpointResult<PaginationResult<ProductDto>>> GetAllProducts
+    private static async Task<EndpointResult<PaginationResult<ProductDto>>> GetAllProducts
             ([AsParameters] PaginationRequest request, ISender sender)
-        {
-            GetProductsQuery query = new(request);
-            return await sender.Send(query);
-        }
+    {
+        GetProductsQuery query = new(request);
+        return await sender.Send(query);
     }
 }

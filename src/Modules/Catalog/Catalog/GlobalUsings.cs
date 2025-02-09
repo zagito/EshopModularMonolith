@@ -20,3 +20,4 @@ global using Microsoft.AspNetCore.Routing;
 global using FluentValidation;
 global using CatalogContracts.Products.Dtos;
 global using CatalogContracts.Products.Features.GetProductById;
+global using static Catalog.Products.Utils.ProductsConstants;
