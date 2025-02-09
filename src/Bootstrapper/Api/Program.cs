@@ -1,3 +1,5 @@
+using MartinCostello.OpenApi;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddSeqEndpoint(connectionName: "seq");
@@ -48,7 +50,10 @@ builder.Services.AddAuthentication()
         options.Audience = "account";
     });
 
+//All of the following code is for the OpenAPI
 builder.Services.AddOpenApi();
+builder.Services.AddOpenApiExtensions(options => options.AddServerUrls = true);
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 
