@@ -4,14 +4,15 @@ public class DeleteShoppingCartEndpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapDelete($"{ShoppingCartsRoot}/{{userName}}", DeleteShoppingCart)
+        app.MapDelete(ShoppingCartsRoot, DeleteShoppingCart)
             .WithTags(ShoppingCartsTag)
-            .WithName(nameof(DeleteShoppingCart));
+            .WithName(nameof(DeleteShoppingCart))
+            .RequireAuthorization();
     }
 
-    private static async Task<EndpointResult> DeleteShoppingCart(string userName, ISender sender)
+    private static async Task<EndpointResult> DeleteShoppingCart(ISender sender, ClaimsPrincipal principal)
     {
-        var command = new DeleteShoppingCartCommand(userName);
+        var command = new DeleteShoppingCartCommand(principal.GetEmail());
         return await sender.Send(command);
     }
 }

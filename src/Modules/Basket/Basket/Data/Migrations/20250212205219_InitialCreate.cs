@@ -20,8 +20,8 @@ namespace Basket.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Type = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    Content = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
+                    Type = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
+                    Content = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: false),
                     OccurredOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     ProcessedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),

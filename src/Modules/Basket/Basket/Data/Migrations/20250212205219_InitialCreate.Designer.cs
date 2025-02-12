@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Basket.Data.Migrations
 {
     [DbContext(typeof(BasketDbContext))]
-    [Migration("20250126135221_InitialCreate")]
+    [Migration("20250212205219_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -34,8 +34,8 @@ namespace Basket.Data.Migrations
 
                     b.Property<string>("Content")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("character varying(200)");
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
 
                     b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -57,8 +57,8 @@ namespace Basket.Data.Migrations
 
                     b.Property<string>("Type")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
 
                     b.HasKey("Id");
 

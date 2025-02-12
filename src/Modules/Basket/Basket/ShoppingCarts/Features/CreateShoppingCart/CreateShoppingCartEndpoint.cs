@@ -1,4 +1,4 @@
-﻿using System.Security.Claims;
+﻿
 
 namespace Basket.ShoppingCarts.Features.CreateShoppingCart;
 
@@ -16,8 +16,7 @@ public class CreateShoppingCartEndpoint : ICarterModule
 
     private static async Task<EndpointResult<Guid>> CreateShoppingCart(CreateShoppingCartRequest request, ISender sender, ClaimsPrincipal principal)
     {
-        var email = principal.FindFirst(ClaimTypes.Email)?.Value;
-        var command = new CreateShoppingCartCommand(email!, request.Items);
+        var command = new CreateShoppingCartCommand(principal.GetEmail(), request.Items);
         return await sender.Send(command);
     }
 }

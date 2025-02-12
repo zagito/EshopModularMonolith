@@ -10,10 +10,10 @@ public class OutboxMessageConfiguration : IEntityTypeConfiguration<OutboxMessage
         builder.HasKey(om => om.Id);
 
         builder.Property(om => om.Type).IsRequired()
-            .HasMaxLength(100);
+            .HasMaxLength(200);
 
         builder.Property(om => om.Content).IsRequired()
-            .HasMaxLength(200);
+            .HasMaxLength(1000);
 
         builder.Property(om => om.OccurredOn).IsRequired();
     }

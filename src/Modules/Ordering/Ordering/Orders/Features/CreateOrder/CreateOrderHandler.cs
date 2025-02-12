@@ -10,11 +10,71 @@ internal record CreateOrderCommand(
 
 internal record CreateOrderItem(Guid ProductId, int Quantity, decimal Price);
 
+internal class CreteOrderItemValidator : AbstractValidator<CreateOrderItem>
+{
+    public CreteOrderItemValidator()
+    {
+        RuleFor(x => x.ProductId).NotEmpty().WithMessage("ProductId is required");
+        RuleFor(x => x.Quantity).GreaterThan(0).WithMessage("Quantity should be greater than 0");
+        RuleFor(x => x.Price).GreaterThan(0).WithMessage("Price should be greater than 0");
+    }
+}
+
+internal class AddressDtoValidator : AbstractValidator<AddressDto>
+{
+    public AddressDtoValidator()
+    {
+        RuleFor(x => x.FirstName).NotEmpty().WithMessage("FirstName is required");
+        RuleFor(x => x.LastName).NotEmpty().WithMessage("LastName is required");
+        RuleFor(x => x.AddressLine).NotEmpty().WithMessage("AddressLine is required");
+        RuleFor(x => x.Country).NotEmpty().WithMessage("Country is required");
+        RuleFor(x => x.State).NotEmpty().WithMessage("State is required");
+        RuleFor(x => x.ZipCode).NotEmpty().WithMessage("ZipCode is required");
+
+        RuleFor(x => x.EmailAddress)
+            .NotEmpty().WithMessage("EmailAddress is required")
+            .EmailAddress().WithMessage("Invalid Email Address");
+    }
+}
+
+internal class PaymentDtoValidator : AbstractValidator<PaymentDto>
+{
+    public PaymentDtoValidator()
+    {
+        RuleFor(x => x.CardName).NotEmpty().WithMessage("CardName is required");
+        RuleFor(x => x.CardNumber).NotEmpty().WithMessage("CardNumber is required");
+        RuleFor(x => x.Expiration).NotEmpty().WithMessage("Expiration is required");
+        RuleFor(x => x.PaymentMethod).NotEmpty().WithMessage("PaymentMethod is required");
+
+        RuleFor(x => x.Cvv)
+            .NotEmpty().WithMessage("Cvv is required")
+            .Length(3);
+    }
+}
+
 internal class CreateOrderCommandValidator : AbstractValidator<CreateOrderCommand>
 {
     public CreateOrderCommandValidator()
     {
         RuleFor(x => x.OrderName).NotEmpty().WithMessage("OrderName is required");
+        RuleFor(x => x.CustomerId).NotEmpty().WithMessage("CustomerId is required");
+
+        RuleFor(x => x.ShippingAddress)
+            .NotNull().WithMessage("ShippingAddress is required")
+            .SetValidator(new AddressDtoValidator());
+
+        RuleFor(x => x.BillingAddress)
+            .NotNull().WithMessage("BillingAddress is required")
+            .SetValidator(new AddressDtoValidator());
+
+        RuleFor(x => x.Payment)
+            .NotNull().WithMessage("Payment is required")
+            .SetValidator(new PaymentDtoValidator());
+
+        RuleFor(x => x.Items)
+            .NotNull().WithMessage("Items is required")
+            .Must(x => x.Count > 0).WithMessage("Items should have at least one item")
+            .ForEach(x => x.SetValidator(new CreteOrderItemValidator()));
     }
 }
 

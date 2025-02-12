@@ -4,14 +4,15 @@ public class GetShoppingCartEndpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapGet($"{ShoppingCartsRoot}/{{userName}}", GetShoppingCart)
+        app.MapGet(ShoppingCartsRoot, GetShoppingCart)
             .WithTags(ShoppingCartsTag)
-            .WithName(nameof(GetShoppingCart));
+            .WithName(nameof(GetShoppingCart))
+            .RequireAuthorization();
     }
 
-    private static async Task<EndpointResult<ShoppingCartResponse>> GetShoppingCart(string userName, ISender sender)
+    private static async Task<EndpointResult<ShoppingCartResponse>> GetShoppingCart(ISender sender, ClaimsPrincipal principal)
     {
-        var query = new GetShoppingCartQuery(userName);
+        var query = new GetShoppingCartQuery(principal.GetEmail());
         return await sender.Send(query);
     }
 }

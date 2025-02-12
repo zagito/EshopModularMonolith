@@ -31,8 +31,12 @@ internal class CreateShoppingCartHandler(IShoppingCartRepository repository, ISe
         if (shoppingCartResult.IsFailure)
             return shoppingCartResult.Error!;
 
-        await repository.CreateAsync(shoppingCartResult.Value!, cancellationToken);
-        return shoppingCartResult.Value!.Id;
+        var userShopingCart = await repository.GetAsync(command.UserName);
+        if (userShopingCart != null)
+            return Error.ShoppingCartAlreadyCreated;
+
+        var result = await repository.CreateAsync(shoppingCartResult.Value!, cancellationToken);
+        return result.Id;
     }
 
     private async Task<Result<ShoppingCart>> CreateShoppingCart(CreateShoppingCartCommand dto)

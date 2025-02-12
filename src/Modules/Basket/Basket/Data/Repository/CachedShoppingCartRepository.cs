@@ -8,6 +8,8 @@ public class CachedShoppingCartRepository(IShoppingCartRepository repository,
 {
     public async Task<ShoppingCart> CreateAsync(ShoppingCart shoppingCart, CancellationToken cancellationToken = default)
     {
+        await cache.RemoveAsync(GetCacheKey(shoppingCart.UserName), cancellationToken);
+
         return await cache.GetOrCreateAsync(GetCacheKey(shoppingCart.UserName), async token =>
         {
             return await repository.CreateAsync(shoppingCart, token);

@@ -4,15 +4,15 @@ internal class RemoveItemFromShoppingCartEndpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapDelete($"{ShoppingCartsRoot}/{{userName}}/items/{{productId}}", RemoveItemFromShoppingCart)
+        app.MapDelete($"{ShoppingCartsRoot}/items/{{productId}}", RemoveItemFromShoppingCart)
             .WithTags(ShoppingCartsTag)
             .WithName(nameof(RemoveItemFromShoppingCart));
     }
 
     private static async Task<EndpointResult<Guid>> RemoveItemFromShoppingCart
-            ([FromRoute] string userName, [FromRoute] Guid productId, ISender sender)
+            ([FromRoute] Guid productId, ISender sender, ClaimsPrincipal principal)
     {
-        var command = new RemoveItemFromShoppingCartCommand(userName, productId);
+        var command = new RemoveItemFromShoppingCartCommand(principal.GetEmail(), productId);
         return await sender.Send(command);
     }
 }

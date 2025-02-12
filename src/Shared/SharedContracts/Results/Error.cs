@@ -8,4 +8,5 @@ public record Error(string Code, string Message)
     public static readonly Error ShoppingCartNotFound = new("404", "Shopping Cart Not Found");
     public static readonly Error OrderNotFound = new("404", "Order Not Found");
     public static readonly Error ShoppingCartCheckoutFailed = new("400", "Check out failed");
+    public static readonly Error ShoppingCartAlreadyCreated = new("400", "Shopping Cart Already Created");
 }

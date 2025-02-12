@@ -14,4 +14,6 @@ global using SharedContracts.CQRS;
 global using Microsoft.AspNetCore.Mvc;
 global using Basket.Data.Repository;
 global using Mapster;
+global using Basket.ShoppingCarts.Utils;
+global using System.Security.Claims;
 global using static Basket.ShoppingCarts.Utils.ShoppingCartsConstants;

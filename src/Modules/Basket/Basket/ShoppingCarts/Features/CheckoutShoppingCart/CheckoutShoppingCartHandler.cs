@@ -17,8 +17,10 @@ internal record CheckoutShoppingCartCommand(
     string ZipCode,
     string CardName,
     string CardNumber,
+    string Cvv,
     string Expiration,
-    int PaymentMethod) : ICommand;
+    int PaymentMethod
+) : ICommand;
 
 internal class CheckoutShoppingCartCommandValidator : AbstractValidator<CheckoutShoppingCartCommand>
 {
@@ -37,6 +39,7 @@ internal class CheckoutShoppingCartCommandValidator : AbstractValidator<Checkout
         RuleFor(x => x.CardNumber).NotEmpty();
         RuleFor(x => x.Expiration).NotEmpty();
         RuleFor(x => x.PaymentMethod).NotEmpty();
+        RuleFor(x => x.Cvv).NotEmpty().Length(3);
     }
 }
 
@@ -83,19 +86,5 @@ internal class CheckoutShoppingCartHandler(BasketDbContext dbContext, ILogger<Ch
             await transaction.RollbackAsync(cancellationToken);
             return Error.ShoppingCartCheckoutFailed;
         }
-
-        
-
-        //var shoppingCart = await repository.GetAsync(command.UserName, true, cancellationToken);
-
-        //if (shoppingCart is null)
-        //    return Error.ShoppingCartNotFound;
-
-        //ShoppingCartCheckoutIntegrationEvent shoppingCartCheckoutIntegrationEvent = command.Adapt<ShoppingCartCheckoutIntegrationEvent>();
-        //await publishEndpoint.Publish(shoppingCartCheckoutIntegrationEvent, cancellationToken); 
-
-        //await repository.DeleteAsync(command.UserName, cancellationToken);
-
-        //return Result.Success();
     }
 }

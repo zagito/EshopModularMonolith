@@ -1,4 +1,6 @@
+using Api;
 using MartinCostello.OpenApi;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -51,9 +53,14 @@ builder.Services.AddAuthentication()
     });
 
 //All of the following code is for the OpenAPI
-builder.Services.AddOpenApi();
+builder.Services.AddOpenApi(options =>
+{
+    options.AddDocumentTransformer<BearerSecuritySchemeTransformer>();
+    options.OpenApiVersion = Microsoft.OpenApi.OpenApiSpecVersion.OpenApi3_0;
+});
 builder.Services.AddOpenApiExtensions(options => options.AddServerUrls = true);
 builder.Services.AddHttpContextAccessor();
+
 
 var app = builder.Build();
 
