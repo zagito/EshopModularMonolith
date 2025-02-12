@@ -1,6 +1,4 @@
-﻿using Ordering.Orders.Features.DeleteOrder;
-
-namespace Ordering.Orders.Features.CreateOrder;
+﻿namespace Ordering.Orders.Features.CreateOrder;
 
 internal class CreateOrderEndpoint : ICarterModule
 {
